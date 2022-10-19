@@ -8,27 +8,17 @@ Features:
 - Train Ticket booking.
 
 
-Objectives:
-This project intends to introduce more user friendliness in the various activities The activities of our System are going to be like-
-• View information
-• Book ticket
-• Cancel ticket
-• Search for particular ticket
-
-
 Technology:
 1) Code::Blocks
-Code Blocks is a free, open source cross platform IDE(integrated development environment)that supports
-multiple compilers. Currently , Code Blocks is oriented towards C, C++, and Fortran.
-Code Blocks is being developed for Windows and Linux.Version 17.12 is the latest stable release.(release date:
-December 30, 2017).
+Code Blocks is a free, open source cross platform IDE(integrated development environment)that supports multiple compilers. 
+Currently, Code Blocks is oriented towards C, C++, and Fortran.Code Blocks is being developed for Windows and Linux.
 
 
 Benefits:
 1) This system is very easy to use.
 2) It produces an easier and flexible way of booking.
-3) Actually passengers use this system to reserve tickets.
-4) Also they can easily cancel their reservation.
+3) Passengers use this system to reserve tickets.
+4) Passengers can easily cancel their reservation.
 5) Passengers can Search for particular ticket.
 6) This system consists with security.
 7) We can add more features to modify this project in future.
