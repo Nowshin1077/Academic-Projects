@@ -24,7 +24,7 @@ Hardware requiremnets:
 
 Software requiremnets:
 Development environment: Arduino IDE
-Language sed: Arduino C
+Language used: Arduino C
 Cloud Server: ThingSpeak
 Mobile App: MIT App Inventor
 
