@@ -1,0 +1,416 @@
+# AI Project for CSE 352 course.
+# Project Name: J.A.R.V.I.S (virtual personal assistant)
+
+# Different modules import
+import pyttsx3  # for text to speech
+import speech_recognition as sr
+import datetime
+import os
+import os.path
+from requests import get  # imported the get function from requests
+import wikipedia
+import webbrowser
+import pywhatkit as kit
+import sys
+import time
+import pyjokes
+import pyautogui
+import requests
+import psutil
+import speedtest
+from playsound import playsound
+# import wolframalpha
+import random  # this package used to play random songs
+import pyaudio
+import pywikihow
+
+
+
+
+
+engine = pyttsx3.init('sapi5') # Defining engine for voices, object creation, sapi5 = TTS engine of microsoft
+voices = engine.getProperty('voices')   #getting details of current voice
+# print(voices[0], id)
+
+"""VOICE"""
+engine.setProperty('voices', voices[0].id)  #changing index, changes voices. 0 for male
+# engine.setProperty('voice', voices[1].id)   #changing index, changes voices. 1 for female
+
+# text to speech
+def speak(audio):
+    engine.say(audio)
+    print(audio)
+    engine.runAndWait()
+
+# To convert voice into text and take commands from user
+def takecommand():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("listening...")
+        r.pause_threshold = 1
+        # audio = r.listen(source, timeout=5,phrase_time_limit=8)
+        audio = r.listen(source, timeout=4,phrase_time_limit=7)
+
+    try:
+        print("Recognizing...")
+        query = r.recognize_google(audio, language='en-in')
+        print(f"user said: {query}")
+
+    except Exception as e:
+        # speak("Say that again please...")
+        return "none"
+    query = query.lower()
+    return query
+
+
+# To wish the user
+def wish():
+    hour = int(datetime.datetime.now().hour)
+    tt = time.strftime("%I :%M %p")
+
+    if hour>=0 and hour<=11:
+        speak(f"Good morning, it's {tt}")
+    elif hour>11 and hour<18:
+        speak(f"Good afternoon, it's {tt}")
+    elif hour>16 and hour<18:
+        speak(f"Good evening, it's {tt}")
+    else:
+        speak(f"Hello, it's {tt}")
+
+    name = ("Jarvis 1 point o")
+    speak("I am your Virtual Personal Assistant")
+    speak(name)
+    speak("How can I help you?")
+
+
+# For news update
+def news():
+    main_url = "https://newsapi.org/v2/top-headlines?sources=techcrunch&apikey=2d18299c93814873b2b667d040d06d7e"
+
+    main_page = requests.get(main_url).json()
+    # print(main_page)
+    articles = main_page["articles"]
+    # print(articles)
+    head = []
+    day=["first", "second", "third"]
+    for ar in articles:
+        head.append(ar["title"])
+
+    for i in range (len(day)):
+        speak(f"today's {day[i]} news is: {head[i]}")
+
+
+
+# To execute tasks
+def TaskExecution():
+    wish()
+    while True:
+        query = takecommand()
+
+# Logic building for different tasks
+       # Tasks performed within the system
+
+        if "open notepad" in query:
+            npath = "C:\\WINDOWS\\system32\\notepad.exe"  # defined path
+            os.startfile(npath)
+
+        elif "open foxit reader" in query:
+            fpath = "C:\\Program Files (x86)\\Foxit Software\\Foxit Reader\\FoxitReader.exe"
+            os.startfile(fpath)
+
+        elif "open command prompt" in query:
+            os.system("start cmd")
+
+        elif "open VS code" in query:
+            vpath = "C:\\Users\\LENOVO\AppData\\Local\Programs\\Microsoft VS Code\\Code.exe"
+            os.startfile(vpath)
+
+        elif "open pycharm" in query:
+            ppath = "C:\\Program Files\\PyCharm Community Edition 2021.1.3\\bin\\pycharm64.exe"
+            os.startfile(ppath)
+
+        elif "open msword" in query:
+            wpath = "C:\\Program Files\\Microsoft Office\\Office16\\WINWORD.EXE"
+            os.startfile(wpath)
+
+        elif "open msexcel" in query:
+            epath = "C:\\Program Files\\Microsoft Office\\Office16\\EXCEL.EXE"
+            os.startfile(epath)\
+
+        elif "open mspowerpoint" in query:
+            pppath = "C:\\Program Files\\Microsoft Office\\Office16\\POWERPNT.EXE"
+            os.startfile(pppath)
+
+
+
+
+# To play music
+        elif "play music" in query:
+            music_dir = "C:\\Users\\LENOVO\\Music"  # copied the directory
+            speak("Here you go")
+            songs = os.listdir(music_dir)  # the files in the music directory converted as a list
+            # rd = random.choice(songs)  # to play random song
+            for song in songs:
+                if song.endswith('.mp3'):   # mp3 file will be play only
+                    os.startfile(os.path.join(music_dir, song))
+
+
+        # Online Task Perform
+        elif "ip address" in query:
+            ip = get('https://api.ipify.org').text
+            speak(f"Your IP Address is {ip}")  # formatted string (use variable inside the string)
+
+# To know info from wikipedia
+        elif "wikipedia" in query:
+            speak("searching wikipedia...")
+            query = query.replace("wikipedia", "")
+            results = wikipedia.summary(query, sentences=2)  # show the result in two sentences
+            speak("according to wikipedia")
+            speak(results)
+            # print(results)
+
+
+# To write a note
+        elif "write a note" in query:
+            speak("What should i write")
+            note = takecommand()
+            file = open('jarvis.txt', 'w')
+            speak("Should i include date and time")
+            snfm = takecommand()
+            if 'yes' in snfm or 'sure' in snfm:
+                strtime = datetime.datetime.now().strftime("%H :%M :%S")
+                file.write(strtime)
+                file.write(" :- ")
+                file.write(note)
+            else:
+                file.write(note)
+
+# To show the note
+        elif "show note" in query:
+            speak("Showing Notes")
+            file = open("jarvis.txt", "r")
+            print(file.read())
+            speak(file.read(6))
+
+
+# To do web browse
+        elif "open browser" in query:
+            speak("Ok,What should I search?")
+            cm = takecommand().lower()
+            webbrowser.open(f"{cm}")
+           # cpath = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+           # os.startfile(cpath)
+
+        elif 'open google' in query:
+            speak("Here you go to Google\n")
+            webbrowser.open("www.google.com")
+
+        elif "open youtube" in query:
+            webbrowser.open("www.youtube.com")
+
+        elif "open facebook" in query:
+            webbrowser.open("www.facebook.com")
+
+        elif "open instagram" in query:
+            webbrowser.open("www.instagram.com")
+
+        elif "open stackoverflow" in query:
+            webbrowser.open("www.stackoverflow.com")
+
+        elif "open researchgate" in query:
+            webbrowser.open("www.researchgate.net")
+
+        elif "open github" in query:
+            webbrowser.open("www.github.com")
+
+        elif "open freecodecamp" in query:
+            webbrowser.open("www.freecodecamp.org")
+
+
+        #elif "send message" in query:
+        #    kit.sendwhatmsg("+8801789960465", "this is testing protocol",19,52)
+
+        elif "play song on youtube" in query:
+            kit.playonyt("Oniket Prantor")
+
+
+
+# To close any application- for notepad
+        elif "close notepad" in query:
+            speak("closing it")
+            os.system("taskkill /f /im notepad.exe")
+
+
+        elif "close VS code" in query:
+            speak("closing it")
+            os.system("taskkill /f /im Code.exe")
+
+
+
+
+# To set an alarm
+        elif "set alarm" in query:
+            speak("Enter the time!")
+            time = input("Enter it: ")
+
+            while True:
+                time_ac = datetime.datetime.now()
+                now = time_ac.strftime("%H:%M:%S")
+
+                if now == time:
+                    speak("Time to wake up!")
+                    playsound('C:\\Users\\LENOVO\Music\\Iron-Man-Theme-Song.mp3')
+                    speak("Alarm Closed!")
+
+                elif now>time:
+                    break
+
+
+# To hear a joke
+        elif "tell me a joke" in query:
+            joke = pyjokes.get_joke()
+            speak(joke)
+
+
+# To take Screenshot
+        elif "take screenshot" in query or "take a screenshot" in query:
+            speak("Please tell me the name for this screenshot file")
+            name = takecommand().lower()
+            speak("Please hold the screen for few seconds, I am taking screenshot")
+            time.sleep(3)
+            img = pyautogui.screenshot()
+            img.save(f"{name}.png")
+            speak("Done, the Screenshot is saved in the main folder. Now, I am ready for next command")
+
+
+# System shutdown, sleep, restart and hibernate
+        elif "shut down the system" in query:
+            os.system("shutdown /s /t 5")
+
+        elif "restart the system" in query:
+            os.system("shutdown /r /t 5")
+
+        elif "make the system sleep" in query:
+            os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
+
+        # elif "hibernate" in query:
+        #    speak("Hibernating")
+        #   os.system("shutdown / h")
+
+        elif "log off" in query or "sign out" in query:
+            speak("Make sure all the application are closed before sign-out")
+            time.sleep(5)
+            os.system(["shutdown", "/l"])
+
+
+# To switch window
+        elif 'switch the window' in query:
+            pyautogui.keyDown("alt")
+            pyautogui.press("tab")
+            time.sleep(1)
+            pyautogui.keyUp("alt")
+
+# To know the latest news
+        elif "tell me tech news" in query:
+            speak("Please wait, fetching the latest tech news")
+            news()
+        elif "ok stop" in query:
+            speak("ok")
+            break
+
+
+
+
+
+# To check battery percentage
+        elif " how much battery left" in query or "how much power we have" in query or "battery" in query:
+             battery = psutil.sensors_battery()
+             percentage = battery.percent
+             speak(f"Your laptop have {percentage} percent battery")
+             if percentage>=75:
+                 speak("We have enough power to continue work")
+
+             elif percentage>=40 and percentage<=75:
+                 speak("You should plug in your laptop for charging")
+             elif percentage>=15 and percentage<=30:
+                 speak("You don't have enough battery to work, please plug in for charging")
+             elif percentage<=15:
+                 speak("You have very low power, please plug in for charging the laptop otherwise it will shutdown very soon")
+
+
+# To check internet speed for uploading and downloading
+        elif "tell me the internet speed" in query:
+
+            st = speedtest.Speedtest()
+            dl = st.download()
+            up = st.upload()
+            speak(f"We have {dl} bit per second downloading speed and {up} bit per second uploading speed")
+
+
+# General question answers
+        elif "hello" in query or "hey" in query:
+            speak("hello, how may I help you?")
+
+        elif "how are you" in query:
+            speak("I am fine. what about you?")
+
+        elif "also good" in query or "fine" in query:
+            speak("glad to hear that")
+
+        elif "thank you" in query or "thanks" in query:
+            speak("it's my pleasure.")
+
+        elif "you can sleep" in query or "sleep now" in query:
+            speak("okay, I am going to sleep. You can call me anytime")
+            break
+
+        elif "who made you" in query or "who created you" in query:
+            speak("I have been created by you.")
+
+        elif "what's your name" in query or "What is your name" in query:
+            speak("My friends call me")
+            speak(name)
+            print("My friends call me", name)
+
+        elif "change my name to" in query:
+            query = query.replace("change my name to", "")
+            name = query
+
+        elif "change name" in query:
+            speak("What would you like to call me?")
+            name = takecommand()
+            speak("Thanks for naming me")
+
+        elif "who am i" in query:
+            speak("If you talk then definitely your a human.")
+
+        elif "why do you exist in this world" in query:
+            speak("Thanks to you. It's a secret.")
+
+        elif "who are you" in query:
+            speak("I am your virtual assistant")
+
+# main program
+if __name__ == "__main__":
+
+    # usrname()
+
+    takecommand()
+    # speak("This is jarvis")
+
+    while True:
+    # if 1:
+        permission = takecommand()
+        if "wake up" in permission:
+            TaskExecution()
+        elif "exit" or "goodbye" in permission:
+            speak("Thank you. have a good day")
+            sys.exit()
+
+        query = takecommand().lower() #
+        # All the commands said by user will be
+        # stored here in 'query' and will be
+        # converted to lower case for easily
+        # recognition of command
+
+
