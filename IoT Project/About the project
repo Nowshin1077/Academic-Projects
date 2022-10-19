@@ -11,10 +11,22 @@ Project features:
 ● Mobile App for the user to see some data visualization.
 ● Switch to On/Off the Pump.
 
+Hardware requiremnets:
+1. Breadboard 
+2. Jumper Wire 
+3. Resistor 
+4. USB Cable
+5. ESP 32 - 3.3V 1 System on Chip (Bluetooth and WiFi module integrated)
+6. Soil Moisture Sensor
+7. IR Sensor
+8. Relay 
+9. Pump - 5V 1 Used for irrigation.
 
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+Software requiremnets:
+Development environment: Arduino IDE
+Language sed: Arduino C
+Cloud Server: ThingSpeak
+Mobile App: MIT App Inventor
+
 
 Project demo video link(Bangla): https://youtu.be/zaWmSUyGoOE
