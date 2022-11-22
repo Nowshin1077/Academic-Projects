@@ -1,14 +1,14 @@
 # Project Name: Smart Irrigation System
 
-IoT is transforming agriculture and allowing farmers to overcome the enormous challenges they face. Smart irrigation systems reduce the chances of over watering the soil and waterlogging in the fields in this system, the moisture level in the soil is monitored and the IR sensor is used for intrusion detection.
+IoT is transforming agriculture and allowing farmers to overcome the enormous challenges they face. Smart irrigation systems reduce the chances of over watering the soil and waterlogging in the fields. In this system, the moisture level in the soil is monitored and the IR sensor is used for intrusion detection.
 
 ---
 
 Project features:
 
 ● This system can give accurate data of moisture sensor.
-● Can handle two IR sensors to detect intrusion.
-● Can store data on ThingSpeak IoT cloud.
+● It can handle two IR sensors to detect intrusion.
+● It can store data on ThingSpeak IoT cloud Server.
 ● Mobile App for the user to see some data visualization.
 ● Switch to On/Off the Pump.
 
