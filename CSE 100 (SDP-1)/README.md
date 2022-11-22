@@ -1,7 +1,7 @@
 Project Name: Railway Reservation System
 
 Features:
-- The basic functions being performed by our system are reservation and cancellation.
+- The basic functions being performed by this system are reservation and cancellation.
 - It contains information about the trains.
 - It also contains information about the SeatAvailability.
 - Reservation Possibilities.
