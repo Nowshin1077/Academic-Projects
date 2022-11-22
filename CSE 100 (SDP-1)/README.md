@@ -9,7 +9,8 @@ Features:
 
 
 Technology:
-1) Code::Blocks
+1) Code::Blocks: 
+
 Code Blocks is a free, open source cross platform IDE(integrated development environment)that supports multiple compilers. 
 Currently, Code Blocks is oriented towards C, C++, and Fortran.Code Blocks is being developed for Windows and Linux.
 
