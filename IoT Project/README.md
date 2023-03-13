@@ -2,6 +2,11 @@
 
 IoT is transforming agriculture and allowing farmers to overcome the enormous challenges they face. Smart irrigation systems reduce the chances of over watering the soil and waterlogging in the fields. In this system, the moisture level in the soil is monitored and the IR sensor is used for intrusion detection.
 
+<p align = "center"> 
+<img src = "https://github.com/Nowshin1077/Undergrad-Projects/blob/main/IoT%20Project/Setup.jpeg" width = "600" />
+</p>
+
+
 ---
 
 Project features:
